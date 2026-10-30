@@ -1,0 +1,9 @@
+name: Mon premier pipeline
+
+on: push
+
+jobs:
+  test-robot:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Salut, je suis le robot"
