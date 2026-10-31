@@ -17,3 +17,28 @@ jobs:
 
       - name: Build et tests
         run: mvn -B package
+
+  deploy:
+    needs: build-et-test
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Préparer Pages
+        uses: actions/configure-pages@v5
+
+      - name: Emballer le site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Publier
+        id: deployment
+        uses: actions/deploy-pages@v4
